@@ -41,6 +41,7 @@ public class ClickStreamWatermark {
                 }));
 
         OutputTag<Event> lateTag = new OutputTag<Event>("late-data"){};
+        OutputTag<Event> warnTag = new OutputTag<Event>("warn-data"){};
         SingleOutputStreamOperator<String> result = watermarkDS.keyBy(event -> event.id)
                 //窗口类型和窗口大小
                 .window(TumblingEventTimeWindows.of(Time.seconds(10)))
@@ -52,9 +53,15 @@ public class ClickStreamWatermark {
                     @Override
                     public void process(String s, ProcessWindowFunction<Event, String, String, TimeWindow>.Context context, Iterable<Event> elements, Collector<String> out) throws Exception {
                         Long cnt = 0L;
+
+
                         for (Event ele : elements) {
                             cnt++;
+                            if("wu".equals(s)){
+                                context.output(warnTag,ele);
+                            }
                         }
+
                         out.collect("window_start:" + context.window().getStart() + " window_end: " + context.window().getEnd() + " data key: " + s + " data value: " + cnt);                       ;
                     }
                 });
@@ -63,6 +70,7 @@ public class ClickStreamWatermark {
 
 
         result.getSideOutput(lateTag).print("late-data: ");
+        result.getSideOutput(warnTag).print("warn-data: ");
 
         env.execute("execute word count stream watermark");
     }
