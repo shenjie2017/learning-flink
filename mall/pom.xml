@@ -17,6 +17,8 @@
         <mysql.version>8.0.28</mysql.version>
         <fastjson.version>1.2.80</fastjson.version>
         <slf4j.version>1.7.36</slf4j.version>
+        <hadoop.version>3.3.2</hadoop.version>
+        <flink.connector.filesystem>1.11.6</flink.connector.filesystem>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.encode>UTF-8</maven.compiler.encode>
@@ -77,6 +79,27 @@
             <version>${flink.version}</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-client -->
+        <dependency>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>hadoop-client</artifactId>
+            <version>${hadoop.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-connector-base</artifactId>
+            <version>${flink.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.flink/flink-connector-filesystem -->
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-connector-filesystem_${scala.version}</artifactId>
+            <version>${flink.connector.filesystem}</version>
+        </dependency>
+
 
         <!-- https://mvnrepository.com/artifact/org.apache.flink/flink-connector-kafka -->
         <dependency>
