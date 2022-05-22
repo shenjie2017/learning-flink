@@ -80,6 +80,12 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-json</artifactId>
+            <version>${flink.version}</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-client -->
         <dependency>
             <groupId>org.apache.hadoop</groupId>
