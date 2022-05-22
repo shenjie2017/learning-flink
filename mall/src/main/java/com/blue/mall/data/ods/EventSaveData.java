@@ -36,7 +36,7 @@ public class EventSaveData {
         // 开启实验性的 unaligned checkpoints
         chkConf.enableUnalignedCheckpoints();
 
-        DataStreamSource<String> source = env.fromSource(KafkaUtils.getDefaultSource("mall_click_event", "test"),
+        DataStreamSource<String> source = env.fromSource(KafkaUtils.getDefaultSource("mall_click_event", "data_group"),
                 WatermarkStrategy.forBoundedOutOfOrderness(Duration.ofSeconds(3)), "mall_click_event kafka source");
 
         source.map(new MapFunction<String, Event>() {
