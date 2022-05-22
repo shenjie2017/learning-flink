@@ -9,8 +9,9 @@ import org.apache.flink.table.api.bridge.java.StreamTableEnvironment;
 public class OdsEventTable {
     public static void main(String[] args) throws Exception {
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
-        //不设置并行度为1会导致eventtime作为水位线会失效
-        env.setParallelism(1);
+        //如果key基本相同，需要设置并行度为1来开开发测试，因为水位线是参照并行度最低，
+        // 如果设置为多个并行度，可能有的并行度并没有接收到数据，导致窗口无法关闭
+        env.setParallelism(2);
         StreamTableEnvironment tEnv = StreamTableEnvironment.create(env);
         tEnv.executeSql("create table ods_event( " +
                 "id string, " +
