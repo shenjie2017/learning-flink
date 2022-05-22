@@ -20,7 +20,9 @@ public class ClickStreamWatermark {
 
     public static void main(String[] args) throws Exception {
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
-        //不配置这个会导致窗口函数不生效，猜想可能跟使用了socket有关系
+        //socket默认单并行度
+        //如果key基本相同，需要设置并行度为1来开开发测试，因为水位线是参照并行度最低，
+        // 如果设置为多个并行度，可能有的并行度并没有接收到数据，导致窗口无法关闭
         env.setParallelism(1);
 
         DataStreamSource<String> line = env.socketTextStream("localhost", 9999);
